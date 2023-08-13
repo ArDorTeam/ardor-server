@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,103 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model t_article {
+  id           BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  article_id   String   @unique(map: "uk-article_id") @default("") @db.VarChar(100)
+  article_type String   @default("0") @db.VarChar(2)
+  title        String   @default("") @db.VarChar(255)
+  sub_title    String   @default("") @db.VarChar(1024)
+  cover_url    String   @default("") @db.VarChar(255)
+  content      String?  @db.LongText
+  visits       BigInt   @default(0)
+  is_recommend Boolean  @default(false)
+  sort_id      Int?     @default(1)
+  status       Boolean  @default(true)
+  seo_title    String   @db.VarChar(255)
+  seo_keyword  String   @db.VarChar(255)
+  seo_desc     String?  @db.Text
+  gmt_create   DateTime @default(now()) @db.DateTime(0)
+  gmt_modified DateTime @default(now()) @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model t_article_tag {
+  id           BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  article_id   BigInt   @db.UnsignedBigInt
+  tag_id       BigInt   @db.UnsignedBigInt
+  status       Boolean  @default(true)
+  gmt_create   DateTime @default(now()) @db.DateTime(0)
+  gmt_modified DateTime @default(now()) @db.DateTime(0)
+
+  @@index([article_id], map: "fk-article_id")
+  @@index([tag_id], map: "fk-tag_id")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model t_oper_log {
+  id           BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  user_id      String   @db.VarChar(64)
+  content      String   @default("") @db.VarChar(255)
+  status       Boolean  @default(true)
+  gmt_create   DateTime @default(now()) @db.DateTime(0)
+  gmt_modified DateTime @default(now()) @db.DateTime(0)
+
+  @@index([user_id], map: "fk-user_id")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model t_role {
+  id           BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  role_id      BigInt   @unique(map: "uk-role_id") @db.UnsignedBigInt
+  role_name    String   @db.VarChar(255)
+  tole_type    Int      @default(2) @db.UnsignedTinyInt
+  status       Boolean  @default(true)
+  gmt_create   DateTime @default(now()) @db.DateTime(0)
+  gmt_modified DateTime @default(now()) @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model t_system {
+  id           BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  content_type Int      @default(1)
+  content      String?  @db.LongText
+  status       Boolean  @default(true)
+  seo_title    String   @db.VarChar(255)
+  seo_keyword  String   @db.VarChar(255)
+  seo_desc     String?  @db.Text
+  gmt_create   DateTime @default(now()) @db.DateTime(0)
+  gmt_modified DateTime @default(now()) @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model t_tags {
+  id           BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  tag_name     String   @default("") @db.VarChar(64)
+  sort_id      Int      @default(0) @db.UnsignedInt
+  status       Boolean  @default(true)
+  seo_title    String   @default("") @db.VarChar(255)
+  seo_keyword  String   @default("") @db.VarChar(255)
+  seo_desc     String?  @db.Text
+  gmt_create   DateTime @default(now()) @db.DateTime(0)
+  gmt_modified DateTime @default(now()) @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model t_user {
+  id           BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  user_id      String   @unique(map: "uk-user_id") @db.VarChar(64)
+  user_avatar  String?  @default("") @db.VarChar(128)
+  user_name    String   @unique(map: "uk-user_name") @db.VarChar(255)
+  mobile       String?  @default("") @db.VarChar(20)
+  email        String?  @default("") @db.VarChar(32)
+  password     String   @db.VarChar(32)
+  token        String?  @default("") @db.VarChar(1024)
+  salt         String?  @default("") @db.VarChar(64)
+  role_id      BigInt   @default(0) @db.UnsignedBigInt
+  status       Boolean  @default(true)
+  gmt_create   DateTime @default(now()) @db.DateTime(0)
+  gmt_modified DateTime @default(now()) @db.DateTime(0)
 }
