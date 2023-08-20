@@ -9,7 +9,7 @@ export class TransformInterceptor implements NestInterceptor {
             map((data) => {
                 return {
                     code: 200,
-                    data,
+                    data: JSON.parse(JSON.stringify(data, (_, v) => typeof v === 'bigint' ? v.toString() : v)),
                     message: '操作成功！'
                 }
             })

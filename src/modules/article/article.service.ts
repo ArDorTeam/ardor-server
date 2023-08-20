@@ -11,4 +11,8 @@ export class ArticleService {
     async getArticleList(): Promise<t_article[] | null> {
         return this.prisma.t_article.findMany()
     }
+
+    async addArticle(query): Promise<t_article[] | null> {
+        return this.prisma.t_article.findMany()
+    }
 }
