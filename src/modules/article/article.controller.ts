@@ -24,8 +24,8 @@ export class ArticleController {
     async deleteArticle(@Body() articleData): Promise<t_article[]> {
         return this.articleService.deleteArticle(articleData)
     }
-    
-    @Get('/getArticleList')
+
+    @Post('/getArticleList')
     async getAll(): Promise<t_article[]> {
         return this.articleService.getArticleList()
     }
