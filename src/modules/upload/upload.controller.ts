@@ -4,7 +4,7 @@ import { CreateUploadDto } from './dto/create-upload.dto';
 import { UpdateUploadDto } from './dto/update-upload.dto';
 import { FastifyFileInterceptor } from 'src/common/interceptors/files.interceptor'
 
-@Controller('upload')
+@Controller()
 export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
 
