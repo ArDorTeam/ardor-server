@@ -1,7 +1,6 @@
 import {Prisma, t_article} from '@prisma/client'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from 'src/common/prisma/prisma.service'
-import { promises } from 'dns'
 
 @Injectable()
 
