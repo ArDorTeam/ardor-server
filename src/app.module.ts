@@ -3,12 +3,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './common/prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AtGuard } from './common/guards';
 import { AuthModule } from './modules/auth/auth.module';
 import { ArticleModule } from './modules/article/article.module';
 import { UsersModule } from './modules/users/users.module';
 import { UploadModule } from './modules/upload/upload.module';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+
 
 @Module({
   imports: [
@@ -20,7 +22,12 @@ import { UploadModule } from './modules/upload/upload.module';
     UploadModule
   ],
   controllers: [AppController],
-  providers: [AppService
+  providers: [AppService,
+    /* 全局返回值转化拦截器 */
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TransformInterceptor,
+    }
     // {
     //   provide: APP_GUARD,
     //   useClass: AtGuard

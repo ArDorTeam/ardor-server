@@ -22,8 +22,9 @@ export class UploadService {
     return filename
 }
 
-async sendFile(fileName, res) {
-    const stream = readFileSync(`../../uploadFile/${fileName}`)
-    return res.type('text/html').send(stream)
-}
+    async readFile(fileName, res) {
+        let path = join(__dirname, `../../../../ardor-file/${fileName}`);
+        const stream = readFileSync(path)
+        return res.send(stream)
+    }
 }
