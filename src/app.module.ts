@@ -8,6 +8,7 @@ import { AtGuard } from './common/guards';
 import { AuthModule } from './modules/auth/auth.module';
 import { ArticleModule } from './modules/article/article.module';
 import { UsersModule } from './modules/users/users.module';
+import { UploadModule } from './modules/upload/upload.module';
 
 @Module({
   imports: [
@@ -15,14 +16,15 @@ import { UsersModule } from './modules/users/users.module';
     PrismaModule,
     ArticleModule,
     AuthModule,
-    UsersModule
+    UsersModule,
+    UploadModule
   ],
   controllers: [AppController],
-  providers: [AppService, 
-    {
-      provide: APP_GUARD,
-      useClass: AtGuard
-    }
+  providers: [AppService
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AtGuard
+    // }
   ],
 })
 export class AppModule {}
