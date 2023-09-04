@@ -31,19 +31,20 @@ export class AuthController {
   }
 
   @Public()
+  @Post('logout')
   @HttpCode(HttpStatus.OK)
   logout(@GetCurrentUserId() user_id: string): Promise<Boolean> {
     return this.authService.logout(user_id);
   }
 
-  // @Public()
-  // @UseGuards(RtGuard)
-  // @Post('refresh')
-  // @HttpCode(HttpStatus.OK)
-  // refreshToken(
-  //   @GetCurrentUserId() user_id: string,
-  //   @GetCurrentUser('refreshToken') refreshToken: string,
-  // ): Promise<Tokens> {
-  //   return this.authService.refreshTokens(user_id, refreshToken);
-  // }
+  @Public()
+  @UseGuards(RtGuard)
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  refreshTokens(
+    @GetCurrentUserId() user_id: string,
+    @GetCurrentUser('refreshToken') refreshToken: string,
+  ): Promise<Tokens> {
+    return this.authService.refreshTokens(user_id, refreshToken);
+  }
 }

@@ -130,7 +130,7 @@
 //           email: user.email,
 //         },
 //       });
-//       expect(userFromDb?.hashedRt).toBeTruthy();
+//       expect(userFromDb?.hashed_rt).toBeTruthy();
 
 //       // logout
 //       await authService.logout(userFromDb!.id);
@@ -141,7 +141,7 @@
 //         },
 //       });
 
-//       expect(userFromDb?.hashedRt).toBeFalsy();
+//       expect(userFromDb?.hashed_rt).toBeFalsy();
 //     });
 //   });
 
@@ -176,7 +176,7 @@
 //       const decoded = decode(rt);
 //       const userId = String(decoded?.sub);
 
-//       // logout the user so the hashedRt is set to null
+//       // logout the user so the hashed_rt is set to null
 //       await authService.logout(userId);
 
 //       let tokens: Tokens | undefined;
