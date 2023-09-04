@@ -47,17 +47,11 @@ export class AuthService {
   }
 
   async signinLocal(dto: AuthDto): Promise<Tokens | null> {
-    const users = await this.prisma.t_user.findMany({
+    const user = await this.prisma.t_user.findUnique({
       where: {
-        email: dto.email,
-      },
+        email: dto.email
+      }
     })
-    const user = users[0]
-    // const user = await this.prisma.t_user.findUnique({
-    //   where: {
-    //     email: dto.email
-    //   }
-    // })
 
     if (!user) throw new ForbiddenException('Access Denied');
 

@@ -8,13 +8,11 @@ export class UsersService {
     private prisma: PrismaService
   ) {}
   async getUser(dto: UsersDto): Promise<Users | null> {
-    const users = await this.prisma.t_user.findMany({
+    const user = await this.prisma.t_user.findUnique({
       where: {
-        email: dto.email,
-      },
+        email: dto.email
+      }
     })
-
-    const user = users[0]
 
     if (!user) return null;
 
