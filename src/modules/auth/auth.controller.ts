@@ -30,7 +30,6 @@ export class AuthController {
     return this.authService.signinLocal(dto);
   }
 
-  @Public()
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   logout(@GetCurrentUserId() user_id: string): Promise<Boolean> {

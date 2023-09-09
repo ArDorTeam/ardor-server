@@ -8,7 +8,6 @@ import { AuthDto } from './dto';
 import { JwtPayload, Tokens } from './types';
 import { ConfigService } from '@nestjs/config';
 import { v4 } from 'uuid'
-import { Users } from '../users/users';
 @Injectable()
 export class AuthService {
   constructor(
@@ -97,14 +96,13 @@ export class AuthService {
   }
 
   async updateRtHash(user_id: string, rt: string): Promise<void> {
-    // const hash = await argon.hash(rt);
+    const hash = await argon.hash(rt);
     await this.prisma.t_user.update({
       where: {
         user_id: user_id,
       },
       data: {
-        // token: hash,
-        token: rt,
+        token: hash,
       },
     });
   }
