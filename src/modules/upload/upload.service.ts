@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUploadDto } from './dto/create-upload.dto';
-import { UpdateUploadDto } from './dto/update-upload.dto';
 import { join, resolve } from 'path/posix'
 import {createWriteStream, readFileSync} from 'fs'
+import { fileUrl } from 'src/common/contants/file.contant'
 
 @Injectable()
 export class UploadService {
@@ -11,7 +10,6 @@ export class UploadService {
     let filename = time+"_"+file['file'][0].filename;
     let data = file['file'][0].data
     //let encoding = multipart['editormd-image-file'][0].encoding
-
     //文件上传路径
     let path = join(__dirname, '../../../../ardor-file/');
     const writerStream = createWriteStream(
@@ -19,8 +17,8 @@ export class UploadService {
     );
     writerStream.write(data);
     await writerStream.end();
-    return filename
-}
+    return fileUrl + filename
+  }
 
     async readFile(fileName, res) {
         let path = join(__dirname, `../../../../ardor-file/${fileName}`);

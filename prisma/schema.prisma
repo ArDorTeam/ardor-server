@@ -104,6 +104,4 @@ model t_user {
   status       Boolean  @default(true)
   gmt_create   DateTime @default(now()) @db.DateTime(0)
   gmt_modified DateTime @default(now()) @db.DateTime(0)
-
-  @@unique([email, user_id])
 }
