@@ -1,8 +1,11 @@
-import {Controller, Get, Post, Body, Req,Param, Res,  UsePipes, UseInterceptors, UploadedFile } from '@nestjs/common'
+import {Controller, Post, Body, Query, UsePipes } from '@nestjs/common'
 import { ArticleService } from './article.service'
 import { t_article } from '@prisma/client'
 import { CreateArticleDto } from './dto'
+import { PaginateDto } from 'src/common/dto';
+import { SearchDto } from './dto/search-article.dto';
 import { ValidationPipe } from '../../common/pipes/validation/validation.pipe'
+import { query } from 'express';
 
 
 @Controller('article')
@@ -11,7 +14,7 @@ export class ArticleController {
     
     @UsePipes(new ValidationPipe())
     @Post('/addArticle')
-    async addArticle(@Body() articleData: CreateArticleDto): Promise<t_article[]> {
+    async addArticle(@Body() articleData: CreateArticleDto ): Promise<t_article[]> {
         return this.articleService.addArticle(articleData)
     }
 
@@ -26,7 +29,7 @@ export class ArticleController {
     }
 
     @Post('/getArticleList')
-    async getAll(): Promise<t_article[]> {
-        return this.articleService.getArticleList()
+    async getAll(@Query() paginate: PaginateDto, @Query() searchData: SearchDto) {
+        return this.articleService.getArticleList(paginate, searchData)
     }
 }
