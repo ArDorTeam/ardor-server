@@ -1,20 +1,20 @@
 
 import { Type } from 'class-transformer';
-import { IsString, IsOptional} from 'class-validator';
+import { IsString, IsOptional, IsArray} from 'class-validator';
 export class SearchDto {
   @IsString()
   @IsOptional()
   @Type(() => String)
   readonly searchValue?: string = '';
 
-  @IsString()
+  @IsArray()
   @IsOptional()
-  @Type(() => String)
-  readonly createTime?: string = '';
+  @Type(() => Array)
+  readonly createTime?: Array<string> = [];
 
-  @IsString()
+  @IsArray()
   @IsOptional()
-  @Type(() => String)
-  readonly updateTime?: string = '';
+  @Type(() => Array)
+  readonly updateTime?: Array<string> = [];
 
 }
