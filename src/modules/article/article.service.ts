@@ -39,7 +39,6 @@ export class ArticleService {
               title: true,
               sub_title: true,
               cover_url: true,
-              content: true,
               visits: true,
               is_recommend: true,
               sort_id: true,
@@ -93,6 +92,29 @@ export class ArticleService {
     async deleteArticle(query) {
         const result =  await this.prisma.t_article.delete({
             where: { article_id: query.article_id}
+        })
+        return result
+    }
+
+     // 获取文章详情
+     async getArticleDetail(query) {
+        const result =  await this.prisma.t_article.findUnique({
+            where: { article_id: query.article_id},
+            select: {
+                id: true,
+                article_id: true,
+                article_type: true,
+                title: true,
+                sub_title: true,
+                cover_url: true,
+                content: true,
+                visits: true,
+                is_recommend: true,
+                sort_id: true,
+                status: true,
+                gmt_create: true,
+                gmt_modified: true
+              }
         })
         return result
     }

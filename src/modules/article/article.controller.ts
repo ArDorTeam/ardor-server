@@ -1,6 +1,6 @@
 import {Controller, Post, Body, Query, UsePipes } from '@nestjs/common'
 import { ArticleService } from './article.service'
-import { CreateArticleDto, UpdateArticleDto, SearchDto, DeleteArticleDto } from './dto'
+import { CreateArticleDto, UpdateArticleDto, SearchDto, DeleteArticleDto, getArticleDetailDto } from './dto'
 import { PaginateDto } from 'src/common/dto';
 import { ValidationPipe } from '../../common/pipes/validation/validation.pipe'
 
@@ -28,5 +28,10 @@ export class ArticleController {
     @Post('/deleteArticle')
     async deleteArticle(@Body() articleData: DeleteArticleDto) {
         return this.articleService.deleteArticle(articleData)
+    }
+
+    @Post('/getArticleDetail')
+    async articleDetail(@Body() articleData: getArticleDetailDto) {
+        return this.articleService.getArticleDetail(articleData)
     }
 }
