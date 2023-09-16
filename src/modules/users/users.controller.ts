@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Param, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Users } from './users';
-import { UsersDto } from './dto';
+import { UserDto, UpdateUserDto, DeleteUserDto } from './dto';
 
 @Controller('users')
 export class UsersController {
@@ -9,12 +9,17 @@ export class UsersController {
 
   @Post('getUser')
   @HttpCode(HttpStatus.OK)
-  async getUser(@Body() dto: UsersDto): Promise<Users | null> {
-    return this.usersService.getUser(dto);
+  async getUser(@Body() userData: UserDto): Promise<Users | null> {
+    return this.usersService.getUser(userData);
   }
 
-  @Delete(':user_id')
-  async delUser(@Param('user_id') user_id: string): Promise<void> {
-    this.usersService.delUser(user_id);
+  @Post('updateUser')
+  async updateUser(@Body() userData: UpdateUserDto): Promise<Users | null> {
+    return this.usersService.updateUser(userData)
+  }
+
+  @Post('deleteUser')
+  async deleteUser(@Body() userData: DeleteUserDto): Promise<Boolean> {
+    return this.usersService.deleteUser(userData);
   }
 }
