@@ -41,6 +41,7 @@ export class ArticleService {
               cover_url: true,
               visits: true,
               is_recommend: true,
+              content: true,
               sort_id: true,
               status: true,
               gmt_create: true,
