@@ -43,6 +43,7 @@ export class ArticleService {
               is_recommend: true,
               sort_id: true,
               status: true,
+              content: true,
               gmt_create: true,
               gmt_modified: true
             },
