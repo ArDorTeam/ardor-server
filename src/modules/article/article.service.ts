@@ -44,7 +44,6 @@ export class ArticleService {
               content: true,
               sort_id: true,
               status: true,
-              content: true,
               gmt_create: true,
               gmt_modified: true
             },
