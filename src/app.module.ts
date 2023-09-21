@@ -10,6 +10,7 @@ import { ArticleModule } from './modules/article/article.module';
 import { UsersModule } from './modules/users/users.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
+import { TagModule } from './modules/tag/tag.module';
 
 
 @Module({
@@ -19,7 +20,8 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
     ArticleModule,
     AuthModule,
     UsersModule,
-    UploadModule
+    UploadModule,
+    TagModule
   ],
   controllers: [AppController],
   providers: [AppService,

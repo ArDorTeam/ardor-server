@@ -80,6 +80,7 @@ model t_system {
 model t_tags {
   id           BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
   tag_name     String   @default("") @db.VarChar(64)
+  tag_id       String   @unique(map: "uk-tag_id") @default("") @db.VarChar(100)
   sort_id      Int      @default(0) @db.UnsignedInt
   status       Boolean  @default(true)
   seo_title    String   @default("") @db.VarChar(255)
