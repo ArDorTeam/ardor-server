@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { TagService } from './tag.service';
-import { CreateTagDto, UpdateTagDto, SearchDto } from './dto';
+import { CreateTagDto, UpdateTagDto, SearchDto, DeleteTagDto } from './dto';
 import { PaginateDto } from 'src/common/dto';
 
 @Controller('tag')
@@ -20,5 +20,10 @@ export class TagController {
   @Post('/list')
   findAll(@Body() paginate: PaginateDto, @Body() searchData: SearchDto) {
     return this.tagService.getTagList(paginate, searchData);
+  }
+
+  @Post('/delete')
+  delete(@Body() DeleteTagDto:DeleteTagDto) {
+    return this.tagService.deleteTag(DeleteTagDto);
   }
 }

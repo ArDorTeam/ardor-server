@@ -19,6 +19,7 @@ export class ArticleService {
                 title: {
                   contains: searchValue,
                 },
+                deleted: false,
                 gmt_create: hasCreateTime ?  {
                   gte: new Date(createTime[0]),
                   lte: new Date(createTime[1])
@@ -91,8 +92,11 @@ export class ArticleService {
     
     // 删除文章
     async deleteArticle(query) {
-        const result =  await this.prisma.t_article.delete({
-            where: { article_id: query.article_id}
+        const result =  await this.prisma.t_article.update({
+            where: { article_id: query.article_id},
+            data: {
+                deleted: true
+            }
         })
         return result
     }

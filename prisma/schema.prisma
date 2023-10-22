@@ -7,6 +7,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model t_article {
   id           BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
@@ -25,6 +27,7 @@ model t_article {
   seo_desc     String?  @db.Text
   gmt_create   DateTime @default(now()) @db.DateTime(0)
   gmt_modified DateTime @default(now()) @db.DateTime(0)
+  deleted      Boolean  @default(false)
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
@@ -88,6 +91,7 @@ model t_tags {
   seo_desc     String?  @db.Text
   gmt_create   DateTime @default(now()) @db.DateTime(0)
   gmt_modified DateTime @default(now()) @db.DateTime(0)
+  deleted      Boolean  @default(false)
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments

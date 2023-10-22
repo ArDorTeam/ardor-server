@@ -15,9 +15,9 @@ export class TagService {
           status: Boolean(body.status),
           tag_id: String(tagId),
           sort_id: 0,
-          seo_title: body.tag_name,
-          seo_keyword: body.tag_name,
-          seo_desc: body.tag_name
+          seo_title: body.tagName,
+          seo_keyword: body.tagName,
+          seo_desc: body.tagName
       }
       const result =  await this.prisma.t_tags.create({
           data
@@ -30,9 +30,9 @@ export class TagService {
         tag_name: body.tagName,
         status: Boolean(body.status),
         sort_id: 0,
-        seo_title: body.tag_name,
-        seo_keyword: body.tag_name,
-        seo_desc: body.tag_name
+        seo_title: body.tagName,
+        seo_keyword: body.tagName,
+        seo_desc: body.tagName
     }
     const result =  await this.prisma.t_tags.update({
       where: { tag_id: body.tagId},
@@ -50,6 +50,7 @@ async getTagList({offset, length}: PaginateDto, {searchValue, createTime, update
           tag_name: {
             contains: searchValue,
           },
+          deleted: false,
           gmt_create: hasCreateTime ?  {
             gte: new Date(createTime[0]),
             lte: new Date(createTime[1])
@@ -78,5 +79,16 @@ async getTagList({offset, length}: PaginateDto, {searchValue, createTime, update
       list: allTag,
       total: total
   }
+}
+
+// 删除标签
+async deleteTag(body) {
+  const result =  await this.prisma.t_tags.update({
+      where: { tag_id: body.tagId},
+      data: {
+          deleted: true
+      }
+  })
+  return result
 }
 }
