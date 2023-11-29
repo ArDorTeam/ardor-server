@@ -29,11 +29,11 @@ import { TagModule } from './modules/tag/tag.module';
     {
       provide: APP_INTERCEPTOR,
       useClass: TransformInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AtGuard
     }
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AtGuard
-    // }
   ],
 })
 export class AppModule {}
