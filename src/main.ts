@@ -31,6 +31,6 @@ async function bootstrap() {
   app.register(fastifyMutipart, {
 		addToBody: true
 	})
-  await app.listen(8070);
+  await app.listen(8070, '0.0.0.0');
 }
 bootstrap();
