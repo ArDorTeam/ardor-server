@@ -46,7 +46,7 @@ export class AuthService {
       });
 
     const tokens = await this.getTokens(user.user_id, user.email);
-    await this.updateRtHash(user.user_id, tokens.refresh_token);
+    await this.updateRtHash(user.user_id, user.salt, tokens.refresh_token);
 
     return tokens;
   }
@@ -70,7 +70,7 @@ export class AuthService {
     if(hashedPassword !== hashPassword) throw new ForbiddenException('Access Denied');
 
     const tokens = await this.getTokens(user.user_id, user.email)
-    await this.updateRtHash(user.user_id, tokens.refresh_token);
+    await this.updateRtHash(user.user_id, user.salt, tokens.refresh_token);
 
     return tokens;
   }
@@ -102,27 +102,28 @@ export class AuthService {
     // if (!rtMatches) throw new ForbiddenException('Access Denied');
 
     const salt = user.salt;
-    const hashedPassword = user.token;
+    const hashedToken = user.token;
     //通过密码盐加密传参，再和数据库的比较，判断是否相等
-    const hashPassword = encryptPassword(rt, salt);
-    if(hashedPassword !== hashPassword) throw new ForbiddenException('Access Denied');
+    const hashToken = encryptPassword(rt, salt);
+    if(hashedToken !== hashToken) throw new ForbiddenException('Access Denied');
 
     const tokens = await this.getTokens(user.user_id, user.email);
-    await this.updateRtHash(user.user_id, tokens.refresh_token);
+    await this.updateRtHash(user.user_id, user.salt, tokens.refresh_token);
 
     return tokens;
   }
 
-  async updateRtHash(user_id: string, rt: string): Promise<void> {
+  async updateRtHash(user_id: string, salt: string, rt: string): Promise<void> {
     // const hash = await argon.hash(rt);
+    // 加密
+    const hash = encryptPassword(rt, salt);
 
     await this.prisma.t_user.update({
       where: {
         user_id: user_id,
       },
       data: {
-        token: rt,
-        // token: hash,
+        token: hash,
       },
     });
   }
@@ -136,7 +137,7 @@ export class AuthService {
     const [at, rt] = await Promise.all([
       this.jwtService.signAsync(jwtPayload, {
         secret: this.config.get<string>('AT_SECRET'),
-        expiresIn: '15m',
+        expiresIn: '1d',
       }),
       this.jwtService.signAsync(jwtPayload, {
         secret: this.config.get<string>('RT_SECRET'),
