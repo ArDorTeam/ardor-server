@@ -3,7 +3,7 @@ module.exports = {
       {
         name: "api_v1",
         script: "./dist/main.js",
-        instances: 'max',
+        instances: '1',
         instance_var: 'INSTANCE_ID',
         exec_mode: 'fork'
       }
