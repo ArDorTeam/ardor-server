@@ -1,9 +1,11 @@
 import { Controller, Post, Body} from '@nestjs/common';
 import { UploadService } from './upload.service';
 import { UploadDto } from './dto'
+import { ApiTags } from '@nestjs/swagger';
 // import { FastifyFileInterceptor } from 'src/common/interceptors/files.interceptor'
 // import { Keep } from 'src/common/decorators/keep.decorator';
 
+@ApiTags('upload')
 @Controller()
 export class UploadController {
   constructor(private readonly uploadService: UploadService) {}

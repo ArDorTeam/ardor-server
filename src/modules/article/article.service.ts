@@ -29,7 +29,7 @@ export class ArticleService {
                     lte: new Date(updateTime[1])
                   }: undefined
               },
-              skip: Number(offset),
+              skip: (Number(offset) - 1 ) * Number(length),
               take: Number(length)
         }
         const allArticle = await this.prisma.t_article.findMany({

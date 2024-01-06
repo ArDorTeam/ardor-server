@@ -4,8 +4,9 @@ import { CreateArticleDto, UpdateArticleDto, SearchDto, DeleteArticleDto, getArt
 import { PaginateDto } from 'src/common/dto';
 import { ValidationPipe } from '../../common/pipes/validation/validation.pipe'
 import { GetCurrentUser, GetCurrentUserId, Public } from 'src/common/decorators';
+import { ApiTags, ApiProperty, ApiBearerAuth } from '@nestjs/swagger';
 
-
+@ApiTags('article')
 @Controller('article')
 export class ArticleController {
     constructor(private articleService:ArticleService) {}
@@ -17,6 +18,7 @@ export class ArticleController {
     }
     
     @UsePipes(new ValidationPipe())
+    @ApiBearerAuth()
     @Post('/addArticle')
     async addArticle(@Body() articleData: CreateArticleDto ) {
         return this.articleService.addArticle(articleData)

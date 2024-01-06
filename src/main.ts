@@ -8,6 +8,7 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 import { ValidationPipe } from '@nestjs/common';
 import fastifyMutipart from 'fastify-multipart'
 import { join } from 'path/posix'
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -17,17 +18,27 @@ async function bootstrap() {
   app.setGlobalPrefix('/api/v1')
   // app.useGlobalInterceptors(new TransformInterceptor())
   app.useGlobalPipes(new ValidationPipe())
-  app.useStaticAssets({
-    root:  join(__dirname, '../../../..', 'ardor-file'),
-    prefix: '/ardor-file/',
-  }
-  )
+  // app.useStaticAssets({
+  //   root:  join(__dirname, '../../../..', 'ardor-file'),
+  //   prefix: '/ardor-file/',
+  // })
   app.setViewEngine({
     engine: {
       handlebars: require('handlebars'),
     },
     templates: join(__dirname, '../../../..', 'ardor-file'),
   });
+  
+  const options = new DocumentBuilder()
+    .setTitle('ardor Api')
+    .setDescription('ardor Api')
+    .setVersion('1.0')
+    .addTag('/api/v1')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
+
   app.register(fastifyMutipart, {
 		addToBody: true
 	})

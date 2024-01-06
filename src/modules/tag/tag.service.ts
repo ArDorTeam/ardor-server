@@ -60,7 +60,7 @@ async getTagList({offset, length}: PaginateDto, {searchValue, createTime, update
               lte: new Date(updateTime[1])
             }: undefined
         },
-        skip: Number(offset),
+        skip: (Number(offset) - 1 ) * Number(length),
         take: Number(length)
   }
   const allTag = await this.prisma.t_tags.findMany({
