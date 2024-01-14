@@ -9,6 +9,7 @@ import { ValidationPipe } from '@nestjs/common';
 import fastifyMutipart from 'fastify-multipart'
 import { join } from 'path/posix'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+const serveStatic = require('serve-static')
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -18,6 +19,7 @@ async function bootstrap() {
   app.setGlobalPrefix('/api/v1')
   // app.useGlobalInterceptors(new TransformInterceptor())
   app.useGlobalPipes(new ValidationPipe())
+  app.use('/ardor-file', serveStatic(join(__dirname, '..', 'ardor-file')))
   // app.useStaticAssets({
   //   root:  join(__dirname, '../../../..', 'ardor-file'),
   //   prefix: '/ardor-file/',

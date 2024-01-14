@@ -11,7 +11,7 @@ export class UploadService {
     let data = file['file'][0].data
     //let encoding = multipart['editormd-image-file'][0].encoding
     //文件上传路径
-    let path = join(__dirname, '../../../../ardor-file/');
+    let path = join(__dirname, '../ardor-file/');
     const writerStream = createWriteStream(
         path + filename
     );
@@ -20,9 +20,9 @@ export class UploadService {
     return fileUrl + filename
   }
 
-    async readFile(fileName, res) {
-        let path = join(__dirname, `../../../../ardor-file/${fileName}`);
-        const stream = readFileSync(path)
-        return res.send(stream)
-    }
+  async readFile(fileName, res) {
+      let path = join(__dirname, `../../../../ardor-file/${fileName}`);
+      const stream = readFileSync(path)
+      return res.send(stream)
+  }
 }

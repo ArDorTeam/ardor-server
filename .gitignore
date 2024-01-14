@@ -131,3 +131,5 @@ dist
 
 # mac auth
 .DS_Store
+
+ardor-file
