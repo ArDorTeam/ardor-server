@@ -35,6 +35,7 @@
     "@prisma/client": "^5.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "cos-nodejs-sdk-v5": "^2.12.6",
     "crypto": "^1.0.1",
     "fastify": "^4.22.2",
     "fastify-multipart": "^5.4.0",

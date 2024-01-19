@@ -21,7 +21,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe())
   app.use('/ardor-file', serveStatic(join(__dirname, '..', 'ardor-file')))
   // app.useStaticAssets({
-  //   root:  join(__dirname, '../../../..', 'ardor-file'),
+  //   root:  join(__dirname, '..', 'ardor-file'),
   //   prefix: '/ardor-file/',
   // })
   app.setViewEngine({

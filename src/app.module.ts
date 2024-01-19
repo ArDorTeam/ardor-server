@@ -11,6 +11,7 @@ import { UsersModule } from './modules/users/users.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { TagModule } from './modules/tag/tag.module';
+import { TencentCosModule } from './modules/tencent-cos/tencent-cos.module';
 
 
 @Module({
@@ -21,7 +22,8 @@ import { TagModule } from './modules/tag/tag.module';
     AuthModule,
     UsersModule,
     UploadModule,
-    TagModule
+    TagModule,
+    TencentCosModule
   ],
   controllers: [AppController],
   providers: [AppService,
