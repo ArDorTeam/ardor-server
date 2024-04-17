@@ -9,6 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ArticleModule } from './modules/article/article.module';
 import { UsersModule } from './modules/users/users.module';
 import { UploadModule } from './modules/upload/upload.module';
+import { CategoryModule } from './modules/category/category.module';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { TagModule } from './modules/tag/tag.module';
 import { TencentCosModule } from './modules/tencent-cos/tencent-cos.module';
@@ -23,7 +24,8 @@ import { TencentCosModule } from './modules/tencent-cos/tencent-cos.module';
     UsersModule,
     UploadModule,
     TagModule,
-    TencentCosModule
+    TencentCosModule,
+    CategoryModule
   ],
   controllers: [AppController],
   providers: [AppService,

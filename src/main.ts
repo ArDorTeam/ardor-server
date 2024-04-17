@@ -20,6 +20,7 @@ async function bootstrap() {
   // app.useGlobalInterceptors(new TransformInterceptor())
   app.useGlobalPipes(new ValidationPipe())
   app.use('/ardor-file', serveStatic(join(__dirname, '..', 'ardor-file')))
+  app.enableCors()
   // app.useStaticAssets({
   //   root:  join(__dirname, '..', 'ardor-file'),
   //   prefix: '/ardor-file/',
@@ -30,7 +31,7 @@ async function bootstrap() {
     },
     templates: join(__dirname, '../../../..', 'ardor-file'),
   });
-  
+
   const options = new DocumentBuilder()
     .setTitle('ardor Api')
     .setDescription('ardor Api')
@@ -43,7 +44,8 @@ async function bootstrap() {
 
   app.register(fastifyMutipart, {
 		addToBody: true
-	})
+  })
+  // 兼容服务器端口白名单
   await app.listen(8070, '0.0.0.0');
 }
 bootstrap();

@@ -9,16 +9,17 @@ import { v4 } from 'uuid'
 
 export class ArticleService {
     constructor(private prisma: PrismaService) {}
-    
-    async getArticleList({offset, length}: PaginateDto, {searchValue, createTime, updateTime}: SearchDto) {
+
+    async getArticleList({offset, length}: PaginateDto, {searchValue, createTime, updateTime, categoryId}: SearchDto) {
         // 搜索条件
         const hasCreateTime = createTime && createTime.length === 2
         const hasUpdateTime = updateTime && updateTime.length === 2
         const searchParams = {
             where: {
                 title: {
-                  contains: searchValue,
+                    contains: searchValue,
                 },
+                category_id: categoryId || undefined,
                 deleted: false,
                 gmt_create: hasCreateTime ?  {
                   gte: new Date(createTime[0]),
@@ -29,8 +30,8 @@ export class ArticleService {
                     lte: new Date(updateTime[1])
                   }: undefined
               },
-              skip: (Number(offset) - 1 ) * Number(length),
-              take: Number(length)
+              skip: offset? (Number(offset) - 1 ) * Number(length): undefined,
+              take: length? Number(length): undefined
         }
         const allArticle = await this.prisma.t_article.findMany({
             select: {
@@ -41,8 +42,9 @@ export class ArticleService {
               sub_title: true,
               cover_url: true,
               visits: true,
-              is_recommend: true,
-              content: true,
+                is_recommend: true,
+                category_id: true,
+            //   content: true,
               sort_id: true,
               status: true,
               gmt_create: true,
@@ -57,23 +59,24 @@ export class ArticleService {
             total: total
         }
     }
-    
+
     // 添加文章
-    async addArticle(query) {
+    async addArticle(query, user_id) {
         const articleId = v4()
         const data = {
             ...query,
             article_id: String(articleId),
             seo_title: query.title,
             seo_keyword: query.title,
-            seo_desc: query.sub_title
+            seo_desc: query.sub_title,
+            user_id
         }
         const result =  await this.prisma.t_article.create({
             data
         })
         return result
     }
-    
+
     // 更新文章
     async updateArticle(query) {
         const data = {
@@ -89,7 +92,7 @@ export class ArticleService {
         })
         return result
     }
-    
+
     // 删除文章
     async deleteArticle(query) {
         const result =  await this.prisma.t_article.update({

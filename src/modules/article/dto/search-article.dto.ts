@@ -9,6 +9,12 @@ export class SearchDto {
   @Type(() => String)
   readonly searchValue?: string = '';
 
+  @ApiProperty({ description: "分类id" })
+  @IsString()
+  @IsOptional()
+  @Type(() => String)
+  readonly categoryId?: string = '';
+
   @ApiProperty({ description: "创建时间" })
   @IsArray()
   @IsOptional()

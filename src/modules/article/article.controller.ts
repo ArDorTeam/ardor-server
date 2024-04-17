@@ -16,12 +16,12 @@ export class ArticleController {
     async getAll(@Body() paginate: PaginateDto, @Body() searchData: SearchDto) {
         return this.articleService.getArticleList(paginate, searchData)
     }
-    
+
     @UsePipes(new ValidationPipe())
-    @ApiBearerAuth()
+    // @ApiBearerAuth()
     @Post('/addArticle')
-    async addArticle(@Body() articleData: CreateArticleDto ) {
-        return this.articleService.addArticle(articleData)
+    async addArticle(@Body() articleData: CreateArticleDto, @GetCurrentUserId() user_id: string) {
+        return this.articleService.addArticle(articleData, user_id)
     }
 
     @Post('/updateArticle')
@@ -34,6 +34,7 @@ export class ArticleController {
         return this.articleService.deleteArticle(articleData)
     }
 
+    @Public()
     @Post('/getArticleDetail')
     async articleDetail(@Body() articleData: getArticleDetailDto) {
         return this.articleService.getArticleDetail(articleData)

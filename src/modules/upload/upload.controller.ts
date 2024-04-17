@@ -2,6 +2,7 @@ import { Controller, Post, Body} from '@nestjs/common';
 import { UploadService } from './upload.service';
 import { UploadDto } from './dto'
 import { ApiTags } from '@nestjs/swagger';
+import { GetCurrentUser, GetCurrentUserId, Public } from 'src/common/decorators';
 // import { FastifyFileInterceptor } from 'src/common/interceptors/files.interceptor'
 // import { Keep } from 'src/common/decorators/keep.decorator';
 
@@ -10,6 +11,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
 
+  @Public()
   @Post('/upload')
     async upload(@Body() body:UploadDto) {
         return this.uploadService.uploadFile(body)
