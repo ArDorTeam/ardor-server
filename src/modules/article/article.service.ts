@@ -53,7 +53,7 @@ export class ArticleService {
             ...searchParams
         })
         // 总数
-        const total = await this.prisma.t_article.count({...searchParams});
+        const total = await this.prisma.t_article.count({...searchParams, skip: undefined, take: undefined});
         return {
             list: allArticle,
             total: total
