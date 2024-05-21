@@ -20,21 +20,22 @@ model t_article {
   is_recommend Boolean  @default(false)
   sort_id      Int?     @default(1)
   status       Boolean  @default(true)
-  seo_title    String   @db.VarChar(255)
-  seo_keyword  String   @db.VarChar(255)
+  seo_title    String   @default("") @db.VarChar(255)
+  seo_keyword  String   @default("") @db.VarChar(255)
   seo_desc     String?  @db.Text
   gmt_create   DateTime @default(now()) @db.DateTime(0)
   gmt_modified DateTime @default(now()) @db.DateTime(0)
   deleted      Boolean  @default(false)
-  user_id      String   @db.VarChar(64)
-  category_id  String   @db.VarChar(255)
+  user_id      String   @default("") @db.VarChar(64)
+  category_id  String   @default("") @db.VarChar(255)
+  is_html      Boolean? @default(false)
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model t_article_tag {
   id           BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
-  article_id   BigInt   @db.UnsignedBigInt
-  tag_id       BigInt   @db.UnsignedBigInt
+  article_id   String   @db.VarChar(255)
+  tag_id       String   @db.VarChar(255)
   status       Boolean  @default(true)
   gmt_create   DateTime @default(now()) @db.DateTime(0)
   gmt_modified DateTime @default(now()) @db.DateTime(0)

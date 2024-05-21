@@ -3,6 +3,7 @@ import { CreateTagDto, SearchDto, UpdateTagDto } from './dto';
 import { PrismaService } from 'src/common/prisma/prisma.service'
 import { PaginateDto } from 'src/common/dto';
 import { v4 } from 'uuid'
+import moment from 'moment';
 
 @Injectable()
 export class TagService {
@@ -64,7 +65,8 @@ async getTagList({offset, length}: PaginateDto, {searchValue, createTime, update
         take: length? Number(length): undefined
   }
   const allTag = await this.prisma.t_tags.findMany({
-      select: {
+    select: {
+        tag_name: true,
         tag_id: true,
         sort_id: true,
         status: true,

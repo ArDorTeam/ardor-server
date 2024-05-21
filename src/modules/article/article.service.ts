@@ -69,11 +69,23 @@ export class ArticleService {
             seo_title: query.title,
             seo_keyword: query.title,
             seo_desc: query.sub_title,
-            user_id
+            user_id,
+            tags: undefined
         }
         const result =  await this.prisma.t_article.create({
             data
         })
+        // 新增标签关联
+        if (query.tags) {
+            const params = query.tags.map(item => ({
+                article_id: String(articleId),
+                tag_id: item,
+                status: true
+            }))
+            await this.prisma.t_article_tag.createMany({
+                data: params
+            })
+        }
         return result
     }
 
